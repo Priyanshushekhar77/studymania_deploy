@@ -28,9 +28,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		// origin: "http://localhost:3000",// frontend url access
-		origin:"*",
-		credentials: true,
+		origin: 'https://studymania-deploy-git-main-priyanshushekhar77s-projects.vercel.app',
+		optionsSuccessStatus: 200
+		// origin:"*",
+		// credentials: true,
 	})
 );
 app.use(
