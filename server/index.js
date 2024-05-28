@@ -22,18 +22,17 @@ const contactUsRoute = require("./routes/Contact");
 // Setting up port number
 const PORT = process.env.PORT || 4000;
 
-
+const corsOptions = {
+	origin: 'https://studymania-deploy-git-main-priyanshushekhar77s-projects.vercel.app',
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+	credentials: true, // if you need to support cookies
+  };
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-	cors({
-		origin: 'https://studymania-deploy-git-main-priyanshushekhar77s-projects.vercel.app',
-		optionsSuccessStatus: 200
-		// origin:"*",
-		// credentials: true,
-	})
-);
+
+app.use(cors(corsOptions));
 app.use(
 	fileUpload({
 		useTempFiles: true,
