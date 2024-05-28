@@ -1,0 +1,9 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "https://studymania-deploy.onrender.com/api/v1"
+      }
+    ]
+  }
+  

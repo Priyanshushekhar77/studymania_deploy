@@ -5,6 +5,7 @@ const app = express();
 const database = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
@@ -27,12 +28,8 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(
-// 	cors({
-// 		origin: "*",
-// 		credentials: true,
-// 	})
-// );
+//use kiye hai
+// Configure CORS to allow requests from your frontend
 const corsOptions = {
     origin: 'https://studymania-deploy.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -40,15 +37,28 @@ const corsOptions = {
     credentials: true,
   };
   
-  app.use((req, res, next) => {
-    console.log('CORS options:', corsOptions);
-    next();
-  });
-  
   app.use(cors(corsOptions));
   
-  app.options('*', cors(corsOptions));
+  // Proxy middleware options
+  const apiProxy = createProxyMiddleware('/api', {
+    target: 'https://studymania-deploy.onrender.com',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': '/api', // rewrite path
+    },
+  });
   
+  // Apply proxy middleware
+  app.use('/api', apiProxy);
+  
+// phle se tha
+// app.use(
+// 	cors({
+// 		origin: "*",
+// 		credentials: true,
+// 	})
+// );
+
 app.use(
 	fileUpload({
 		useTempFiles: true,
