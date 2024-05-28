@@ -34,15 +34,19 @@ app.use(cookieParser());
 // 	})
 // );
 const corsOptions = {
-	origin: 'https://studymania-deploy.vercel.app', // Your Vercel frontend URL
-	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-	allowedHeaders: ['Content-Type', 'Authorization'],
-	credentials: true, // If you need to support cookies
+    origin: 'https://studymania-deploy.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   };
+  
+  app.use((req, res, next) => {
+    console.log('CORS options:', corsOptions);
+    next();
+  });
   
   app.use(cors(corsOptions));
   
-  // Ensure preflight requests are handled
   app.options('*', cors(corsOptions));
   
 app.use(
