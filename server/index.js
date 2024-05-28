@@ -31,25 +31,16 @@ app.use(cookieParser());
 //use kiye hai
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-    origin: 'https://studymania-deploy.vercel.app',
+    // origin: 'https://studymania-deploy.vercel.app',
+    origin:"*",
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   };
   
   app.use(cors(corsOptions));
-  
-  // Proxy middleware options
-  const apiProxy = createProxyMiddleware('/api', {
-    target: 'https://studymania-deploy.onrender.com',
-    changeOrigin: true,
-    pathRewrite: {
-      '^/api': '/api', // rewrite path
-    },
-  });
-  
-  // Apply proxy middleware
-  app.use('/api', apiProxy);
+app.options('*', cors(corsOptions));
+ 
   
 // phle se tha
 // app.use(
