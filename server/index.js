@@ -27,12 +27,24 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(
-	cors({
-		origin: "*",
-		credentials: true,
-	})
-);
+// app.use(
+// 	cors({
+// 		origin: "*",
+// 		credentials: true,
+// 	})
+// );
+const corsOptions = {
+	origin: 'https://studymania-deploy.vercel.app', // Your Vercel frontend URL
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+	credentials: true, // If you need to support cookies
+  };
+  
+  app.use(cors(corsOptions));
+  
+  // Ensure preflight requests are handled
+  app.options('*', cors(corsOptions));
+  
 app.use(
 	fileUpload({
 		useTempFiles: true,
